@@ -1,0 +1,184 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://scenes/Static/Station.tscn" type="PackedScene" id=1]
+[ext_resource path="res://audio/level_2.ogg" type="AudioStream" id=2]
+[ext_resource path="res://scenes/Plugins/Conductor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/font/Pixellari.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scenes/Static/Burner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/Static/Station-spriteframe/Station-2-frame.tres" type="SpriteFrames" id=6]
+[ext_resource path="res://scenes/Static/Station-spriteframe/Station-4-frame.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://scenes/Static/Station-spriteframe/Station-3-frame.tres" type="SpriteFrames" id=8]
+[ext_resource path="res://scenes/Static/Station-spriteframe/Station-1-frame.tres" type="SpriteFrames" id=9]
+[ext_resource path="res://scenes/Static/ProgressBox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/bg/background-v2.png" type="Texture" id=11]
+[ext_resource path="res://scripts/UI/Pause.gd" type="Script" id=12]
+[ext_resource path="res://assets/UI/continue_btn.png" type="Texture" id=13]
+[ext_resource path="res://assets/UI/quit_btn.png" type="Texture" id=14]
+[ext_resource path="res://scripts/Levels/Level2.gd" type="Script" id=15]
+[ext_resource path="res://audio/sfx/sfx_pause.wav" type="AudioStream" id=16]
+[ext_resource path="res://audio/sfx/sfx_continue_from_pause.wav" type="AudioStream" id=19]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 4 )
+
+[node name="Level2" type="Node2D"]
+script = ExtResource( 15 )
+first_cut_capacity = 14
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 512, 300 )
+z_index = -200
+texture = ExtResource( 11 )
+
+[node name="Station" parent="." instance=ExtResource( 1 )]
+position = Vector2( 104, 128 )
+
+[node name="RailSprite" parent="Station" index="0"]
+position = Vector2( 1, 404 )
+
+[node name="AnimatedSprite" parent="Station" index="2"]
+frames = ExtResource( 9 )
+
+[node name="Station2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 312, 128 )
+
+[node name="RailSprite" parent="Station2" index="0"]
+position = Vector2( 1, 404 )
+
+[node name="AnimatedSprite" parent="Station2" index="2"]
+frames = ExtResource( 6 )
+
+[node name="Station3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 128 )
+
+[node name="RailSprite" parent="Station3" index="0"]
+position = Vector2( 1, 404 )
+
+[node name="AnimatedSprite" parent="Station3" index="2"]
+frames = ExtResource( 8 )
+
+[node name="Station4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 712, 128 )
+
+[node name="RailSprite" parent="Station4" index="0"]
+position = Vector2( 1, 404 )
+
+[node name="AnimatedSprite" parent="Station4" index="2"]
+frames = ExtResource( 7 )
+
+[node name="Station5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 920, 128 )
+
+[node name="RailSprite" parent="Station5" index="0"]
+position = Vector2( 1, 404 )
+
+[node name="Conductor" parent="." instance=ExtResource( 3 )]
+stream = ExtResource( 2 )
+bpm = 150
+
+[node name="Burner" parent="." instance=ExtResource( 5 )]
+position = Vector2( 104, 207 )
+input = "lane_one_click"
+
+[node name="Burner2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 312, 207 )
+input = "lane_two_click"
+
+[node name="Burner3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 207 )
+input = "lane_three_click"
+
+[node name="Burner4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 712, 207 )
+input = "lane_four_click"
+
+[node name="Burner5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 920, 207 )
+input = "lane_five_click"
+
+[node name="ProgressBox" parent="." instance=ExtResource( 10 )]
+position = Vector2( 54, 8 )
+
+[node name="Score" parent="ProgressBox" index="3"]
+custom_fonts/font = SubResource( 1 )
+
+[node name="EveryLabel" parent="ProgressBox" index="4"]
+margin_left = 330.0
+margin_right = 401.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "56
+"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.611765 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="TextureButton" parent="CanvasLayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -105.0
+margin_top = -44.0
+margin_right = 105.0
+margin_bottom = -4.0
+texture_normal = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="TextureButton" parent="CanvasLayer/Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -105.0
+margin_top = 15.0
+margin_right = 105.0
+margin_bottom = 55.0
+texture_normal = ExtResource( 14 )
+
+[node name="ContinueSound" type="AudioStreamPlayer2D" parent="CanvasLayer/Pause"]
+stream = ExtResource( 19 )
+
+[node name="PauseSound" type="AudioStreamPlayer2D" parent="CanvasLayer/Pause"]
+stream = ExtResource( 16 )
+
+[connection signal="set_capacity" from="." to="ProgressBox" method="_on_Level_set_capacity"]
+[connection signal="update_score_label" from="." to="ProgressBox" method="_on_Level_update_score_label"]
+[connection signal="progress_bar_changed" from="Station" to="ProgressBox" method="_on_Progress_changed"]
+[connection signal="progress_bar_changed" from="Station2" to="ProgressBox" method="_on_Progress_changed"]
+[connection signal="progress_bar_changed" from="Station3" to="ProgressBox" method="_on_Progress_changed"]
+[connection signal="progress_bar_changed" from="Station4" to="ProgressBox" method="_on_Progress_changed"]
+[connection signal="progress_bar_changed" from="Station5" to="ProgressBox" method="_on_Progress_changed"]
+[connection signal="beat" from="Conductor" to="." method="_on_Conductor_beat"]
+[connection signal="measure" from="Conductor" to="." method="_on_Conductor_measure"]
+[connection signal="button_down" from="CanvasLayer/Pause/Continue" to="CanvasLayer/Pause" method="_on_Continue_button_down"]
+[connection signal="button_down" from="CanvasLayer/Pause/Quit" to="CanvasLayer/Pause" method="_on_Quit_button_down"]
+
+[editable path="Station"]
+[editable path="Station2"]
+[editable path="Station3"]
+[editable path="Station4"]
+[editable path="Station5"]
+[editable path="ProgressBox"]

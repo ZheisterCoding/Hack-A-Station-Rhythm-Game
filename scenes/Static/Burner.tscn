@@ -1,0 +1,77 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://scripts/Static/Burner.gd" type="Script" id=1]
+[ext_resource path="res://assets/static/Burner/burner-2.png" type="Texture" id=2]
+[ext_resource path="res://assets/static/Burner/burner-3.png" type="Texture" id=3]
+[ext_resource path="res://assets/static/Burner/burner-5.png" type="Texture" id=4]
+[ext_resource path="res://assets/static/Burner/burner-7.png" type="Texture" id=5]
+[ext_resource path="res://assets/static/Burner/burner-8.png" type="Texture" id=6]
+[ext_resource path="res://assets/static/Burner/burner-9.png" type="Texture" id=7]
+[ext_resource path="res://assets/static/Burner/burner-10.png" type="Texture" id=8]
+[ext_resource path="res://assets/static/Burner/burner-6.png" type="Texture" id=9]
+[ext_resource path="res://assets/static/Burner/burner-4.png" type="Texture" id=10]
+[ext_resource path="res://assets/static/Burner/burner-1.png" type="Texture" id=11]
+[ext_resource path="res://assets/static/Burner/burner-v2-1.png" type="Texture" id=12]
+[ext_resource path="res://assets/static/Burner/burner-v2-8.png" type="Texture" id=13]
+[ext_resource path="res://assets/static/Burner/burner-v2-9.png" type="Texture" id=14]
+[ext_resource path="res://assets/static/Burner/burner-v2-10.png" type="Texture" id=15]
+[ext_resource path="res://assets/static/Burner/burner-v2-2.png" type="Texture" id=16]
+[ext_resource path="res://assets/static/Burner/burner-v2-3.png" type="Texture" id=17]
+[ext_resource path="res://assets/static/Burner/burner-v2-6.png" type="Texture" id=18]
+[ext_resource path="res://assets/static/Burner/burner-v2-4.png" type="Texture" id=19]
+[ext_resource path="res://assets/static/Burner/burner-v2-7.png" type="Texture" id=20]
+[ext_resource path="res://assets/static/Burner/burner-v2-5.png" type="Texture" id=21]
+[ext_resource path="res://audio/sfx/sfx_burn.wav" type="AudioStream" id=22]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "no-burn",
+"speed": 23.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "cart-burn",
+"speed": 26.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 17.009, 16 )
+
+[node name="Burner" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_left = -16.0
+margin_top = -8.0
+margin_right = 16.0
+margin_bottom = 8.0
+color = Color( 0.129412, 0.117647, 0.117647, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -8 )
+frames = SubResource( 1 )
+animation = "no-burn"
+
+[node name="BurnArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BurnArea"]
+position = Vector2( 0, 3.75859 )
+shape = SubResource( 2 )
+
+[node name="DelayTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="BurnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 22 )
+volume_db = 2.0
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="area_entered" from="BurnArea" to="." method="_on_BurnArea_area_entered"]
+[connection signal="area_exited" from="BurnArea" to="." method="_on_BurnArea_area_exited"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]

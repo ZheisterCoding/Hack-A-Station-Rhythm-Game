@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scripts/Dynamic/Cart.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Dynamic/slime_cart_spriteframe.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://scenes/Dynamic/diamond_cart_spriteframe.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://scenes/Dynamic/bomb_cart_spriteframe.tres" type="SpriteFrames" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 18.6499 )
+
+[node name="Cart" type="Area2D" groups=[
+"cart",
+]]
+script = ExtResource( 1 )
+plus_sprite_frame = ExtResource( 3 )
+min_one_sprite_frame = ExtResource( 2 )
+min_three_sprite_frame = ExtResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 2 )
+animation = "run"
+playing = true
+
+[node name="CartColor" type="ColorRect" parent="."]
+visible = false
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.005
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
